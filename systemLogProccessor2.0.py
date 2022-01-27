@@ -1,6 +1,7 @@
 import subprocess
 import platform
-def macOS():
+import tkinter
+def macOS()->None:
    efficiencyCoreFrequencies = []
    powerCoreFrequencies = []
    systemInstructionsRetired = []
@@ -32,11 +33,9 @@ def macOS():
    percentageOfEnergyUsedByCPU = None
    percentageOfEnergyUsedByGPU = None
    percentageOfEnergyUsedByDRAM = None
-   sudoPass = input("please enter sudo password:")
+   command = "sudo powermetrics -n 1 --samplers cpu_power".split()
    while(True):
-      command = "sudo powermetrics -n 1 --samplers cpu_power".split() #each set of data is good for 5 seconds
       p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
-      sudoPrompt = p.communicate(sudoPass+"\n")[1]
       rawData = p.communicate()[0].split("\n")
       for i in range(0, len(rawData)):
          rawData[i] = rawData[i].strip("\n")
