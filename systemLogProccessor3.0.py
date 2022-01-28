@@ -1,5 +1,6 @@
 import subprocess
 import platform
+import concurrent
 def macOS()->None:
    efficiencyCoreFrequencies = []
    powerCoreFrequencies = []
@@ -32,6 +33,14 @@ def macOS()->None:
    percentageOfEnergyUsedByCPU = None
    percentageOfEnergyUsedByGPU = None
    percentageOfEnergyUsedByDRAM = None
+   trackData = False
+   fileName = None
+   userInput = input("Would you like to save data to .csv format (y for yes, all other inputs considered no): ")
+   if(userInput == 'y' or userInput == 'Y'):
+      trackData = True
+      print("data trracking activated, data will be saved every 5 minutes!")
+      fileName = input("please enter the name of the file you would like (do not include file extension): ")
+      print("file will be saved in the directory the script was run in named SystemPerformanceData.csv")
    command = "sudo powermetrics -n 1 --samplers cpu_power".split()
    while(True):
       p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
